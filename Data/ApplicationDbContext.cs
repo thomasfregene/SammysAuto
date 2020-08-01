@@ -7,12 +7,15 @@ using SammysAuto.Models;
 
 namespace SammysAuto.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<SammysAutoApplicationUser, SammysAutoApplicationRole, string>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
+
         }
+
         public DbSet<ServiceType> ServiceTypes { get; set; }
+
     }
 }
