@@ -17,6 +17,7 @@ namespace SammysAuto.Models
         public int? ServiceId { get; set; }
         //Id is a GUId greated by identity user
         public string CustomerId { get; set; }
+        public int? CarId { get; set; }
         public string ActionParameters 
         {
             get
@@ -29,6 +30,10 @@ namespace SammysAuto.Models
                 if (CustomerId != null && CustomerId.Length > 0)
                 {
                     param.Append(String.Format("{0}", CustomerId));
+                }
+                if (CarId != 0 && CarId != null)
+                {
+                    param.Append(String.Format("{0}", CarId));
                 }
                 return param.ToString().Substring(0, param.Length);
             }
