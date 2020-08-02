@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SammysAuto.Data;
 using SammysAuto.Models;
 using SammysAuto.ViewModel;
@@ -56,6 +57,26 @@ namespace SammysAuto.Controllers
                 _db.Add(car);
                 await _db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index), new { userId = car.UserId });
+            }
+
+            return View(car);
+        }
+
+        //Details GET
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var car = await _db.Cars
+                .Include(c => c.ApplicationUser)
+                .SingleOrDefaultAsync(m => m.Id == id);
+
+            if(car == null)
+            {
+                return NotFound();
             }
 
             return View(car);
