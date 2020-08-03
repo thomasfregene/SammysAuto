@@ -56,7 +56,7 @@
 {
     <div class="text-primary form-border">No Cars Found! Please add a car...</div>
 }
-else 
+else
 {
     <div class="form-border">
         <table class="table table-condensed table-hover">
@@ -80,47 +80,47 @@ else
                 <th></th>
             </tr>
 
-            @foreach(var item in Model.Cars)
+            @foreach (var item in Model.Cars)
             {
-        <tr>
-            <td>
-                @Html.DisplayFor(m => item.VIN)
-            </td>
-            <td>
-                @Html.DisplayFor(m => item.Make)
-            </td>
-            <td>
-                @Html.DisplayFor(m => item.Model)
-            </td>
-            <td>
-                @Html.DisplayFor(m => item.Style)
-            </td>
-            <td>
-                @Html.DisplayFor(m => item.Color)
-            </td>
-            @if (User.IsInRole(SD.CustomerEndUser))
-            {
-                <td style="width:100%">
-                    <a class="btn btn-primary btn-sm" asp-controller="Services" asp-action="Index" asp-route-carId="@item.Id">
-                        <span class="glyphicon glyphicon-wrench"></span>&nbsp; Service History
-                    </a>
-                </td>
-            }
-            else
-            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(m => item.VIN)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => item.Make)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => item.Model)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => item.Style)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => item.Color)
+                    </td>
+                    @if (User.IsInRole(SD.CustomerEndUser))
+                    {
+                        <td style="width:100%">
+                            <a class="btn btn-primary btn-sm" asp-controller="Services" asp-action="Index" asp-route-carId="@item.Id">
+                                <span class="glyphicon glyphicon-wrench"></span>&nbsp; Service History
+                            </a>
+                        </td>
+                    }
+                    else
+                    {
 
-                <td style="width:100px">
-                    <a class="btn btn-success btn-sm" asp-controller="Services" asp-action="Index" asp-route-carId="@item.Id">
-                        <span class="glyphicon glyphicon-plus-sign"></span>&nbsp; New Service
-                    </a>
-                </td>
+                        <td style="width:100px">
+                            <a class="btn btn-success btn-sm" asp-controller="Services" asp-action="Create" asp-route-carId="@item.Id">
+                                <span class="glyphicon glyphicon-plus-sign"></span>&nbsp; New Service
+                            </a>
+                        </td>
+                    }
+                    <td>
+                        @Html.Partial("_TableButtonPartial", new IndividualButtonPartial { CarId = item.Id })
+                    </td>
+                </tr>
             }
-            <td>
-               @Html.Partial("_TableButtonPartial", new IndividualButtonPartial { CarId = item.Id})
-            </td>
-        </tr>
-            }
-            
+
         </table>
     </div>
 }
