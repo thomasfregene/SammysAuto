@@ -31,7 +31,7 @@ namespace SammysAuto
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddIdentity<SammysAutoApplicationUser, SammysAutoApplicationRole>(options => options.SignIn.RequireConfirmedAccount = true)
-                //.AddRoles<SammysAutoApplicationRole>()
+                .AddRoles<SammysAutoApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddScoped<RoleManager<SammysAutoApplicationRole>>();
             services.AddControllersWithViews();

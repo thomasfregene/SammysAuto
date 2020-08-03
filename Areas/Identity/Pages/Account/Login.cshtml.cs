@@ -12,6 +12,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using SammysAuto.Data;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using SammysAuto.Utility;
 
 namespace SammysAuto.Areas.Identity.Pages.Account
 {
@@ -83,8 +85,21 @@ namespace SammysAuto.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
+                    var user = await _userManager.FindByEmailAsync(Input.Email);
+
+                    var roles = await _userManager.GetRolesAsync(user);
+
+                    if (roles.FirstOrDefault().ToString().Equals(SD.AdminEndUser))
+                    {
+                        return RedirectToAction("Index", "Users");
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Cars", new { userId = user.Id });
+                    }
+
+                    //_logger.LogInformation("User logged in.");
+                    //return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
                 {
